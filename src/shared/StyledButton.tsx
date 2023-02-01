@@ -24,12 +24,13 @@ const StyledButton = styled.button<ButtonProps>`
   color: ${(props) => getFontColor(props.buttonType)};
   font-weight: 400;
   font-size: 14px;
-  height: 42px;
+  height: 32px;
   padding: 5px 25px;
   box-sizing: border-box;
   border-radius: 4px;
   border: 1px solid var(--main-border-color);
   cursor: pointer;
+  z-index: 1;
 
   &:hover {
     border-color: ${(props) => getFontColor(props.buttonType)};
