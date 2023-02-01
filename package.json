@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts docs",
     "prettier:check": "prettier --check .",
     "prettier:all": "prettier --write .",
     "test": "react-scripts test",
