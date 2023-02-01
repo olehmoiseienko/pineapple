@@ -9,6 +9,7 @@ import {
 import StyledInput from "../../../../shared/StyledInput";
 import StyledButton, { ButtonType } from "../../../../shared/StyledButton";
 import { NodePort } from "../../../models/NodePort";
+import StyledIconicButton from "../../../../shared/StyledIconicButton";
 
 interface Props {
   editableNode: Node;
@@ -145,6 +146,9 @@ const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferenc
     onNodeDelete(node);
   };
 
+  const isSourceAddButtonDisabled = pipelinePreferences.maxPorts <= node.data.sources.length;
+  const isTargetButtonDisabled = pipelinePreferences.maxPorts <= node.data.targets.length;
+
   return (
     <StyledEditPanel>
       <h2>Selected Node</h2>
@@ -155,15 +159,18 @@ const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferenc
 
         <label>Type:</label>
         <span>{node.type}</span>
-
+        *{pipelinePreferences.maxPorts}
         <label>Name:</label>
         <StyledInput
           value={node.data.label}
           onChange={(evt) => onNameChange(evt.target.value)}
         />
 
-        <label>Sources:</label>
-        <span onClick={() => onAddSourcePort()}>+</span>
+        <label>
+          Sources:  (MAX: {pipelinePreferences.maxPorts})
+          <StyledIconicButton disabled={isSourceAddButtonDisabled} onClick={() => onAddSourcePort()}>+</StyledIconicButton>
+        </label>
+
         {node.data.sources.map((port: NodePort) => (
           <p key={port.id}>
             <StyledInput
@@ -171,12 +178,14 @@ const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferenc
               value={port.name}
               onChange={(evt) => onSourcePortChange(evt.target.value, port.id)}
             />
-            <span onClick={() => onRemoveSourcePort(port.id)}>X</span>
+            <StyledIconicButton onClick={() => onRemoveSourcePort(port.id)}>x</StyledIconicButton>
           </p>
         ))}
 
-        <label>Targets:</label>
-        <span onClick={() => onAddTargetPort()}>+</span>
+        <label>
+          Targets: (MAX: {pipelinePreferences.maxPorts})
+          <StyledIconicButton disabled={isTargetButtonDisabled} onClick={() => onAddTargetPort()}>+</StyledIconicButton>
+        </label>
         {node.data.targets.map((port: NodePort) => (
           <p key={port.id}>
             <StyledInput
@@ -184,7 +193,7 @@ const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferenc
               value={port.name}
               onChange={(evt) => onTargetPortChange(evt.target.value, port.id)}
             />
-            <span onClick={() => onRemoveTargetPort(port.id)}>X</span>
+            <StyledIconicButton onClick={() => onRemoveTargetPort(port.id)}>x</StyledIconicButton>
           </p>
         ))}
       </StyledEditPanelInfo>
