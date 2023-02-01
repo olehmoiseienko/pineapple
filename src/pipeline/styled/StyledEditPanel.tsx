@@ -18,6 +18,7 @@ export const StyledEditPanelInfo = styled.div`
   align-items: flex-start;
   height: 100%;
   border-right: 1px solid var(--main-shadow-color);
+  overflow-y: auto;
 
   label {
     font-size: 14px;
