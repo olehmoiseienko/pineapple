@@ -1,39 +1,39 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import ReactFlow, {
-  ReactFlowProvider,
-  Background,
   addEdge,
-  useNodesState,
-  useEdgesState,
+  Background,
   Controls,
+  Panel,
+  Edge,
+  EdgeChange,
   Node,
   NodeMouseHandler,
-  EdgeChange,
-  Edge,
+  ReactFlowProvider,
+  useEdgesState,
+  useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import EditPanel from "../edit-panel/EditPanel";
-import { supportedNodeTypes } from "./supported-node-types";
-import {
-  StyledWorkspace,
-  StyledWorkspaceWrapper,
-} from "../styled/StyledWorkspace";
-import { draggableNodeKey } from "../constant";
+import {StyledWorkspace, StyledWorkspaceWrapper,} from "../styled/StyledWorkspace";
+import {draggableNodeKey} from "../constant";
+import type {WorkspaceConfig} from "../pipeline-initializer/types";
+import StyledButton, {ButtonType} from "../../shared/StyledButton";
 
-let id = 0;
+let id = 10;
 const getId = () => ` ${id++}`;
 
 interface Props {
-  initialNodes: any;
-  initialEdges: any;
-  onDeployPipeline: any;
+  workspaceConfig: WorkspaceConfig;
+  onDeployPipeline: (pipeline: any) => void;
 }
 
-// TODO: WIP
-const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
-  const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
+  const reactFlowWrapper = useRef<HTMLInputElement>(null);
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    workspaceConfig.initialNodes
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState(
+    workspaceConfig.initialEdges
+  );
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
@@ -48,8 +48,7 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
 
   const onDragOver = useCallback((event: any) => {
     event.preventDefault();
-    // setSelectedNode(null);
-    // @ts-ignore
+    setSelectedNode(null);
     event.dataTransfer.dropEffect = "move";
   }, []);
 
@@ -57,30 +56,24 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
     (event: any) => {
       event.preventDefault();
       setSelectedNode(null);
-      // @ts-ignore
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      // @ts-ignore
-      const type = event.dataTransfer.getData(draggableNodeKey);
 
-      // check if the dropped element is valid
-      if (typeof type === "undefined" || !type) {
+      const type = event.dataTransfer.getData(draggableNodeKey);
+      // TODO: add type guard
+      if (!type || !reactFlowWrapper.current) {
         return;
       }
 
-      // @ts-ignore
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const position = reactFlowInstance.project({
-        // @ts-ignore
         x: event.clientX - reactFlowBounds.left,
-        // @ts-ignore
         y: event.clientY - reactFlowBounds.top,
       });
-      const id = getId();
-      const newNode = {
-        id,
+
+      const newNode = workspaceConfig.nodeCreator({
+        id: getId(),
         type,
         position,
-        data: { label: `${type} ${id} node` },
-      };
+      })
 
       setNodes((nds) => nds.concat(newNode));
     },
@@ -93,7 +86,6 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
   };
 
   const onNodeClick: NodeMouseHandler = (event, node) => {
-    console.log(node);
     setSelectedNode(node);
   };
 
@@ -102,7 +94,6 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
     node: Node,
     nodes: Node[]
   ) => {
-    console.log(node);
     // setSelectedNode(null);
   };
 
@@ -117,7 +108,6 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
   };
 
   const onNodeChange = (newNode: Node) => {
-    console.log(newNode);
     setNodes((nds) =>
       nds.map((node) => {
         if (node.id === newNode?.id) {
@@ -136,6 +126,14 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
     setSelectedNode(null);
   };
 
+  const onDeployPipelineHandler = () => {
+    const pipeline = {
+      nodes,
+      edges
+    }
+    onDeployPipeline(pipeline);
+  }
+
   return (
     <StyledWorkspace>
       <ReactFlowProvider>
@@ -143,7 +141,7 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            nodeTypes={supportedNodeTypes}
+            nodeTypes={workspaceConfig.nodeTypeComponentMap}
             onNodeClick={onNodeClick}
             onNodeDragStop={onNodeDragStop}
             onEdgeClick={onEdgeClick}
@@ -158,11 +156,15 @@ const Workspace = ({ initialNodes, initialEdges, onDeployPipeline }: Props) => {
           >
             <Background />
             <Controls />
+            <Panel position="top-left">
+              <StyledButton onClick={onDeployPipelineHandler} buttonType={ButtonType.DEFAULT}>Deploy</StyledButton>
+            </Panel>
+
           </ReactFlow>
         </StyledWorkspaceWrapper>
 
         {selectedNode && (
-          <EditPanel
+          <workspaceConfig.editPanelComponent
             editableNode={selectedNode}
             onNodeChange={onNodeChange}
             onNodeDelete={onNodeDelete}

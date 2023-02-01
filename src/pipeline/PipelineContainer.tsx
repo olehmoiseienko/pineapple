@@ -1,49 +1,66 @@
 import React, { useEffect, useState } from "react";
 import Workspace from "./workspace/Workspace";
 import PaletteSidebar from "./palette-sidebar/PaletteSidebar";
-import { predefinedNodes } from "../mocks/predefinedNodes";
-import { initNodes, initEdges } from "../mocks/initPipeline";
-import {StyledProgress} from "./styled/StyledProgress";
+import { StyledProgress } from "./styled/StyledProgress";
+import PipelineInitializer from "./pipeline-initializer/pipelineInitializer";
+import type { PipelineConfig } from "./pipeline-initializer/types";
 
-const fetchSet = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(predefinedNodes), 1000);
-  })
-}
 
 const PipelineContainer = () => {
   const [initialized, setInitialized] = useState<any>(false);
-  const [paletteList, setPaletteList] = useState<any>([]);
+  const [initializationConfigError, setInitializationConfigError] =
+    useState<any>(null);
+
+  const [pipelineConfig, setPipelineConfig] = useState<PipelineConfig | null>(
+    null
+  );
 
   useEffect(() => {
-    getPalette();
+    initPipeline();
   }, []);
 
-  const getPalette = async () => {
-    const predefinedNodes = await fetchSet();
-    setPaletteList(predefinedNodes);
-    setInitialized(true);
+  const initPipeline = async () => {
+    try {
+      const pipelineInitializer = new PipelineInitializer();
+      const pipelineConfig: PipelineConfig =
+        await pipelineInitializer.getPipelineConfig();
+
+      // TODO: add config validation here
+      if (!pipelineConfig) {
+        throw new Error("Config is missing :-(");
+      }
+
+      setPipelineConfig(pipelineConfig);
+      setInitialized(true);
+    } catch (e) {
+      setInitializationConfigError(e);
+    }
   };
 
-  const deployPipeline = (pipeline: any) => {
-    // TODO
+
+  const deployPipeline = (pipeline: unknown): void => {
+    // TODO: deploy logic
     console.log(pipeline);
   };
 
   return (
     <>
-    {!initialized && <StyledProgress>Workspace initialization...</StyledProgress>}
-    {initialized &&
-    <>
-      <PaletteSidebar paletteNodeList={paletteList} />
+      {initializationConfigError && (
+        <StyledProgress>Pipeline config is missing :-( </StyledProgress>
+      )}
+      {!initialized && !initializationConfigError && (
+        <StyledProgress>Workspace initialization...</StyledProgress>
+      )}
+      {initialized && pipelineConfig && (
+        <>
+          <PaletteSidebar paletteNodes={pipelineConfig.paletteNodes} />
 
-      <Workspace
-        initialNodes={initNodes}
-        initialEdges={initEdges}
-        onDeployPipeline={deployPipeline}
-      />
-    </>
-    }
+          <Workspace
+            workspaceConfig={pipelineConfig.workspaceConfig}
+            onDeployPipeline={deployPipeline}
+          />
+        </>
+      )}
     </>
   );
 };

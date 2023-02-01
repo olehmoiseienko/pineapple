@@ -5,24 +5,24 @@ import StyledSidebar from "../styled/StyledSidebar";
 import { createGroupedNodes } from "../utils/createGroupedNodes";
 
 interface Props {
-  paletteNodeList: any;
+  paletteNodes: any;
 }
 
-const PaletteSidebar = ({ paletteNodeList }: Props) => {
+const PaletteSidebar = ({ paletteNodes }: Props) => {
   const [displayedGroupedNodes, setDisplayedGroupedNodes] = useState<any>([]);
 
   useEffect(() => {
-    updateNodesTree(paletteNodeList);
-  }, [paletteNodeList]);
+    updateNodesTree(paletteNodes);
+  }, [paletteNodes]);
 
   const onFilterHandler = (searchQuery: string) => {
     if (searchQuery.length) {
-      const filteredNodes = paletteNodeList.filter((node: any) =>
+      const filteredNodes = paletteNodes.filter((node: any) =>
         node.type.includes(searchQuery)
       );
       updateNodesTree(filteredNodes);
     } else {
-      updateNodesTree(paletteNodeList);
+      updateNodesTree(paletteNodes);
     }
   };
 
