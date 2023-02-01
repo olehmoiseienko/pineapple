@@ -159,7 +159,7 @@ const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferenc
 
         <label>Type:</label>
         <span>{node.type}</span>
-        *{pipelinePreferences.maxPorts}
+
         <label>Name:</label>
         <StyledInput
           value={node.data.label}
