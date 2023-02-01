@@ -14,6 +14,7 @@ interface Props {
   editableNode: Node;
   onNodeChange: (node: Node) => void;
   onNodeDelete: (node: Node) => void;
+  pipelinePreferences: any;
 }
 
 enum PortTypePath {
@@ -21,7 +22,7 @@ enum PortTypePath {
   TARGETS = "targets",
 }
 
-const EditPanel = ({ editableNode, onNodeChange, onNodeDelete }: Props) => {
+const EditPanel = ({ editableNode, onNodeChange, onNodeDelete, pipelinePreferences }: Props) => {
   const [node, setNode] = useState(editableNode);
   const updateNodeInternals = useUpdateNodeInternals();
 

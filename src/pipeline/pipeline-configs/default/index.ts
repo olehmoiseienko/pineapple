@@ -5,4 +5,5 @@ export {
   nodeTypeComponentMap,
   editPanelComponent,
   nodeCreator,
+  pipelinePreferences,
 } from "./defaultConfig";

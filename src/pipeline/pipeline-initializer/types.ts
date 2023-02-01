@@ -18,6 +18,7 @@ export interface WorkspaceConfig {
   // TODO: specify types
   nodeCreator: (optopns: any) => BaseNode;
   editPanelComponent: React.MemoExoticComponent<any>;
+  pipelinePreferences: any
 }
 
 export interface InitializerOptions {

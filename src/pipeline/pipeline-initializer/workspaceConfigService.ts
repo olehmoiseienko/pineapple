@@ -2,8 +2,10 @@ import {
   initNodes,
   initEdges,
   nodeTypeComponentMap,
-  editPanelComponent, nodeCreator
-} from "../pipeline-configs/default/index";
+  editPanelComponent,
+  nodeCreator,
+  pipelinePreferences,
+} from "../pipeline-configs/custom-config-example";
 import type { WorkspaceConfig } from "./types";
 
 interface Options {}
@@ -14,6 +16,7 @@ const defaultInitWorkspaceConfig: WorkspaceConfig = {
   nodeTypeComponentMap: nodeTypeComponentMap,
   editPanelComponent,
   nodeCreator: nodeCreator,
+  pipelinePreferences: pipelinePreferences,
 };
 
 class WorkspaceConfigService {

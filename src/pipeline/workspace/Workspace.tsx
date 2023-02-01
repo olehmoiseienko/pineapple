@@ -168,6 +168,7 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
             editableNode={selectedNode}
             onNodeChange={onNodeChange}
             onNodeDelete={onNodeDelete}
+            pipelinePreferences={workspaceConfig.pipelinePreferences}
           />
         )}
       </ReactFlowProvider>
