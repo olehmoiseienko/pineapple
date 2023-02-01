@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/pineapple/static/css/main.29114b93.css",
+    "main.js": "/pineapple/static/js/main.57475b90.js",
+    "index.html": "/pineapple/index.html",
+    "main.29114b93.css.map": "/pineapple/static/css/main.29114b93.css.map",
+    "main.57475b90.js.map": "/pineapple/static/js/main.57475b90.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.29114b93.css",
+    "static/js/main.57475b90.js"
+  ]
+}
