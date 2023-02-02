@@ -4,9 +4,15 @@ import PaletteSidebar from "./palette-sidebar/PaletteSidebar";
 import { StyledProgress } from "./styled/StyledProgress";
 import PipelineInitializer from "./pipeline-initializer/pipelineInitializer";
 import exportData from "./utils/downloadFile";
-import type { PipelineConfig } from "./pipeline-initializer/types";
-import {DeployedPipeline} from "./models/DeployedPipeline";
+import { PipelineConfig, ConfigType } from "./pipeline-initializer/types";
+import { DeployedPipeline } from "./models/DeployedPipeline";
+import { registeredAllowedConfigsNames } from "./pipeline-configs/staticConfigs";
 
+// TODO: should be extracted from Pipeline. Probably get it from application state
+const initConfigOptions = {
+  configName: registeredAllowedConfigsNames.DEFAULT,
+  configType: ConfigType.STATIC,
+};
 
 const PipelineContainer = () => {
   const [initialized, setInitialized] = useState<any>(false);
@@ -25,7 +31,7 @@ const PipelineContainer = () => {
     try {
       const pipelineInitializer = new PipelineInitializer();
       const pipelineConfig: PipelineConfig =
-        await pipelineInitializer.getPipelineConfig();
+        await pipelineInitializer.getPipelineConfig(initConfigOptions);
 
       // TODO: add config validation here
       if (!pipelineConfig) {
@@ -38,7 +44,6 @@ const PipelineContainer = () => {
       setInitializationConfigError(e);
     }
   };
-
 
   const deployPipeline = (pipeline: DeployedPipeline): void => {
     console.log(pipeline);
