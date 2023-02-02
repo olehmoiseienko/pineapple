@@ -149,9 +149,12 @@ const EditPanel = ({
   };
 
   const isSourceAddButtonDisabled =
-    pipelinePreferences.maxPorts <= node.data.sources.length;
+    pipelinePreferences.maxPorts <= node.data.sources.length || !pipelinePreferences.allowedAdd;
   const isTargetButtonDisabled =
-    pipelinePreferences.maxPorts <= node.data.targets.length;
+    pipelinePreferences.maxPorts <= node.data.targets.length  || !pipelinePreferences.allowedAdd;
+
+  const isSourceRemoveButtonDisabled = !pipelinePreferences.allowedDelete;
+  const isTargetRemoveDisabled = !pipelinePreferences.allowedDelete;
 
   return (
     <StyledEditPanel>
@@ -171,8 +174,9 @@ const EditPanel = ({
         />
 
         <label>
-          Sources: (MAX: {pipelinePreferences.maxPorts})
+          Sources:
           <StyledIconicButton
+            title={isSourceAddButtonDisabled ? 'disabled': ''}
             disabled={isSourceAddButtonDisabled}
             onClick={() => onAddSourcePort()}
           >
@@ -187,15 +191,16 @@ const EditPanel = ({
               value={port.name}
               onChange={(evt) => onSourcePortChange(evt.target.value, port.id)}
             />
-            <StyledIconicButton onClick={() => onRemoveSourcePort(port.id)}>
+            <StyledIconicButton title={isSourceRemoveButtonDisabled ? 'disabled': ''} disabled={isSourceRemoveButtonDisabled} onClick={() => onRemoveSourcePort(port.id)}>
               x
             </StyledIconicButton>
           </p>
         ))}
 
         <label>
-          Targets: (MAX: {pipelinePreferences.maxPorts})
+          Targets:
           <StyledIconicButton
+            title={isTargetButtonDisabled ? 'disabled': ''}
             disabled={isTargetButtonDisabled}
             onClick={() => onAddTargetPort()}
           >
@@ -209,7 +214,7 @@ const EditPanel = ({
               value={port.name}
               onChange={(evt) => onTargetPortChange(evt.target.value, port.id)}
             />
-            <StyledIconicButton onClick={() => onRemoveTargetPort(port.id)}>
+            <StyledIconicButton title={isTargetRemoveDisabled ? 'disabled': ''} disabled={isTargetRemoveDisabled} onClick={() => onRemoveTargetPort(port.id)}>
               x
             </StyledIconicButton>
           </p>
