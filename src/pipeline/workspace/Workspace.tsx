@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import ReactFlow, {
   addEdge,
   Background,
   Controls,
   Panel,
   Edge,
-  EdgeChange,
   Node,
   NodeMouseHandler,
   ReactFlowProvider,
@@ -40,10 +39,6 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
-  useEffect(() => {
-    console.log("onEdge", edges);
-  }, [edges]);
-
   const onConnect = useCallback((params: any) => {
     setEdges((eds) => addEdge(params, eds));
   }, []);
@@ -60,7 +55,7 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
       setSelectedNode(null);
 
       const type = event.dataTransfer.getData(draggableNodeKey);
-      // TODO: add type guard
+
       if (!type || !reactFlowWrapper.current) {
         return;
       }
@@ -82,20 +77,8 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
     [reactFlowInstance]
   );
 
-  const onEdgesChangeProxy = (edges: EdgeChange[]) => {
-    onEdgesChange(edges);
-  };
-
   const onNodeClick: NodeMouseHandler = (event, node) => {
     setSelectedNode(node);
-  };
-
-  const onNodeDragStop = (
-    event: React.MouseEvent,
-    node: Node,
-    nodes: Node[]
-  ) => {
-    // setSelectedNode(null);
   };
 
   const onEdgeClick = (event: React.MouseEvent, edge: Edge) => {
@@ -145,11 +128,10 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
             edges={edges}
             nodeTypes={workspaceConfig.nodeTypeComponentMap}
             onNodeClick={onNodeClick}
-            onNodeDragStop={onNodeDragStop}
             onEdgeClick={onEdgeClick}
             onPaneClick={onPaneClick}
             onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChangeProxy}
+            onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}

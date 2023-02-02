@@ -46,7 +46,6 @@ const PipelineContainer = () => {
   };
 
   const deployPipeline = (pipeline: DeployedPipeline): void => {
-    console.log(pipeline);
     exportData(pipeline);
   };
 
