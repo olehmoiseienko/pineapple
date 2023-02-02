@@ -82,6 +82,12 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
     [reactFlowInstance]
   );
 
+  const onNodeDragStart: NodeMouseHandler = (event, node) => {
+    if (selectedNode) {
+      setSelectedNode(node);
+    }
+  };
+
   const onNodeClick: NodeMouseHandler = (event, node) => {
     setSelectedNode(node);
   };
@@ -136,6 +142,7 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
             onEdgeClick={onEdgeClick}
             onPaneClick={onPaneClick}
             onNodesChange={onNodesChange}
+            onNodeDragStart={onNodeDragStart}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
