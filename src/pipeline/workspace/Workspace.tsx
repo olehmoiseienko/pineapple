@@ -21,7 +21,7 @@ import type { WorkspaceConfig } from "../pipeline-initializer/types";
 import StyledButton, { ButtonType } from "../../shared/StyledButton";
 
 let id = 10;
-const getId = () => ` ${id++}`;
+const getId = () => `${id++}`;
 
 interface Props {
   workspaceConfig: WorkspaceConfig;
