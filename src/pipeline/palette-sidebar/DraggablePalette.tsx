@@ -1,5 +1,5 @@
 import React from "react";
-import { PredefinedNode } from "../types";
+import { PaletteNode } from "../models/Palette"
 import ExpandableGroup from "./ExpandableGroup";
 import { draggableNodeKey } from "../constant";
 
@@ -7,12 +7,14 @@ interface Props<T> {
   groupedNodes: T[];
 }
 
-const DraggablePalette = <T extends PredefinedNode>({
+const DraggablePalette = <T extends PaletteNode>({
   groupedNodes,
 }: Props<T>) => {
-  const onDragHandler = (event: any, nodeType: string) => {
-    event.dataTransfer.setData(draggableNodeKey, nodeType);
-    event.dataTransfer.effectAllowed = "move";
+  const onDragHandler = (event: DragEvent, nodeType: string) => {
+    if (event.dataTransfer) {
+      event.dataTransfer.setData(draggableNodeKey, nodeType);
+      event.dataTransfer.effectAllowed = "move";
+    }
   };
 
   return (

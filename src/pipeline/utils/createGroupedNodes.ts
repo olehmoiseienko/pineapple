@@ -1,9 +1,9 @@
-import { PredefinedNode } from "../types";
+import { PaletteNode } from "../models/Palette";
 
-export const createGroupedNodes = (nodes: PredefinedNode[]) => {
-  const groups: Record<string, PredefinedNode[]> = {};
+export const createGroupedNodes = (nodes: PaletteNode[]) => {
+  const groups: Record<string, PaletteNode[]> = {};
 
-  nodes.forEach((node: PredefinedNode) => {
+  nodes.forEach((node: PaletteNode) => {
     if (!groups[node.module]) {
       groups[node.module] = [node];
     } else {

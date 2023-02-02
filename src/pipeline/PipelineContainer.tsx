@@ -5,6 +5,7 @@ import { StyledProgress } from "./styled/StyledProgress";
 import PipelineInitializer from "./pipeline-initializer/pipelineInitializer";
 import exportData from "./utils/downloadFile";
 import type { PipelineConfig } from "./pipeline-initializer/types";
+import {DeployedPipeline} from "./models/DeployedPipeline";
 
 
 const PipelineContainer = () => {
@@ -39,7 +40,7 @@ const PipelineContainer = () => {
   };
 
 
-  const deployPipeline = (pipeline: unknown): void => {
+  const deployPipeline = (pipeline: DeployedPipeline): void => {
     console.log(pipeline);
     exportData(pipeline);
   };
