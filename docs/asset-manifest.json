@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/pineapple/static/css/main.29114b93.css",
-    "main.js": "/pineapple/static/js/main.35d35b72.js",
+    "main.js": "/pineapple/static/js/main.b13badf8.js",
     "index.html": "/pineapple/index.html",
     "main.29114b93.css.map": "/pineapple/static/css/main.29114b93.css.map",
-    "main.35d35b72.js.map": "/pineapple/static/js/main.35d35b72.js.map"
+    "main.b13badf8.js.map": "/pineapple/static/js/main.b13badf8.js.map"
   },
   "entrypoints": [
     "static/css/main.29114b93.css",
-    "static/js/main.35d35b72.js"
+    "static/js/main.b13badf8.js"
   ]
 }
