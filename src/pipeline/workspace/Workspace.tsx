@@ -28,6 +28,11 @@ interface Props {
   onDeployPipeline: (pipeline: any) => void;
 }
 
+/*
+* TODO: Resolve Issues List:
+*  fix updating position of edges on adding/removing ports
+* */
+
 const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   const reactFlowWrapper = useRef<HTMLInputElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(
