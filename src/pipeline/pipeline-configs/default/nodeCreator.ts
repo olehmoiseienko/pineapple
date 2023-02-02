@@ -8,7 +8,7 @@ const defaultPort = {
 
 export const nodeCreator = ({ id, type, position }: any): BaseNode => {
   const data = {
-    label: `${type} ${id} node`,
+    label: `${type} ${id}`,
     sources: [defaultPort],
     targets: [defaultPort],
   };
