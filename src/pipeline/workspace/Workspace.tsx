@@ -121,8 +121,11 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   };
 
   const onNodeDelete = (deletedNode: Node) => {
-    setNodes((nds) => nds.filter((node) => node.id !== deletedNode.id));
     setSelectedNode(null);
+    setNodes((nds) => nds.filter((node) => node.id !== deletedNode.id));
+    setEdges((eds) => {
+      return eds.filter((edge) => edge.source !== deletedNode.id && edge.target !== deletedNode.id);
+    })
   };
 
   const onDeployPipelineHandler = () => {
