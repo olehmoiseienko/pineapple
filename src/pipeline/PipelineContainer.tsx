@@ -3,6 +3,7 @@ import Workspace from "./workspace/Workspace";
 import PaletteSidebar from "./palette-sidebar/PaletteSidebar";
 import { StyledProgress } from "./styled/StyledProgress";
 import PipelineInitializer from "./pipeline-initializer/pipelineInitializer";
+import exportData from "./utils/downloadFile";
 import type { PipelineConfig } from "./pipeline-initializer/types";
 
 
@@ -39,8 +40,8 @@ const PipelineContainer = () => {
 
 
   const deployPipeline = (pipeline: unknown): void => {
-    // TODO: deploy logic
     console.log(pipeline);
+    exportData(pipeline);
   };
 
   return (
