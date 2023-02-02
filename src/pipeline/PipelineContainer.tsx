@@ -10,7 +10,7 @@ import { registeredAllowedConfigsNames } from "./pipeline-configs/staticConfigs"
 
 // TODO: should be extracted from Pipeline. Probably get it from application state
 const initConfigOptions = {
-  configName: registeredAllowedConfigsNames.DEFAULT,
+  configName: registeredAllowedConfigsNames.PINEAPPLE_EXAMPLE,
   configType: ConfigType.STATIC,
 };
 
