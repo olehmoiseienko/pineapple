@@ -19,7 +19,6 @@ class PaletteService {
     if (options && options.configName) {
       const config = this.config.getStaticConfig(options.configName);
       const paletteNodes: PaletteNodes = config.paletteNodes;
-      console.log("config", config);
       return paletteNodes || defaultInitPaletteNodes;
     }
 

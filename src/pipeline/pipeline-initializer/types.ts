@@ -17,7 +17,7 @@ export interface WorkspaceConfig {
   initialEdges: BaseEdge[];
   nodeTypeComponentMap: NodeTypeComponentMap;
   // TODO: specify types
-  nodeCreator: (optopns: any) => BaseNode;
+  nodeCreator: (options: any) => BaseNode;
   editPanelComponent: React.MemoExoticComponent<any>;
   pipelinePreferences: any;
 }

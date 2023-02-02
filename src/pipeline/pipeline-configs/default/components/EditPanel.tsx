@@ -41,7 +41,6 @@ const EditPanel = ({
   }, [node, onNodeChange]);
 
   const onNameChange = (value: string) => {
-    console.log(value);
     setNode((prevNode: Node) => {
       prevNode.data.label = value;
       return {
@@ -99,8 +98,6 @@ const EditPanel = ({
       const length = prevNode.data[portTypePath].length;
       const initPosition = 100 / (length * 2);
       const step = length === 1 ? 100 : 100 / length;
-      console.log("initPosition", initPosition);
-      console.log("step", step);
 
       prevNode.data[portTypePath].forEach((p: NodePort, index: number) => {
         p.left = `${initPosition + step * index}%`;

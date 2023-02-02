@@ -45,7 +45,6 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   }, [edges]);
 
   const onConnect = useCallback((params: any) => {
-    console.log("onConnect", params);
     setEdges((eds) => addEdge(params, eds));
   }, []);
 
@@ -84,7 +83,6 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   );
 
   const onEdgesChangeProxy = (edges: EdgeChange[]) => {
-    console.log("onEdgesChangeProxy", edges);
     onEdgesChange(edges);
   };
 
@@ -101,12 +99,10 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   };
 
   const onEdgeClick = (event: React.MouseEvent, edge: Edge) => {
-    console.log(edge);
     setSelectedNode(null);
   };
 
   const onPaneClick = (event: React.MouseEvent) => {
-    console.log(event);
     setSelectedNode(null);
   };
 

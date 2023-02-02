@@ -36,7 +36,6 @@ class WorkspaceConfigService {
         nodeCreator: config.nodeCreator,
         pipelinePreferences: config.pipelinePreferences,
       };
-      console.log("config", config);
       return { ...workspaceConfig } || { ...defaultInitWorkspaceConfig };
     }
 
