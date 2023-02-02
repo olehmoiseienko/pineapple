@@ -38,7 +38,7 @@ const EditPanel = ({
 
   useEffect(() => {
     onNodeChange(node);
-  }, [node, onNodeChange]);
+  }, [node]);
 
   const onNameChange = (value: string) => {
     setNode((prevNode: Node) => {
