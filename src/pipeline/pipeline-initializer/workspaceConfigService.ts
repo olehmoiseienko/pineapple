@@ -1,37 +1,43 @@
-import {
-  initNodes,
-  initEdges,
-  nodeTypeComponentMap,
-  editPanelComponent,
-  nodeCreator,
-  pipelinePreferences,
-} from "../pipeline-configs/custom-config-example";
-import type { WorkspaceConfig } from "./types";
+import type { WorkspaceConfig, GetConfigOptions } from "./types";
+import staticConfigs from "../pipeline-configs/staticConfigs";
+import Config from "../pipeline-configs/Config";
 
-interface Options {}
-
+const defaultConfig = staticConfigs.default;
 const defaultInitWorkspaceConfig: WorkspaceConfig = {
-  initialNodes: initNodes,
-  initialEdges: initEdges,
-  nodeTypeComponentMap: nodeTypeComponentMap,
-  editPanelComponent,
-  nodeCreator: nodeCreator,
-  pipelinePreferences: pipelinePreferences,
+  initialNodes: defaultConfig.initNodes,
+  initialEdges: defaultConfig.initEdges,
+  nodeTypeComponentMap: defaultConfig.nodeTypeComponentMap,
+  editPanelComponent: defaultConfig.editPanelComponent,
+  nodeCreator: defaultConfig.nodeCreator,
+  pipelinePreferences: defaultConfig.pipelinePreferences,
 };
 
 class WorkspaceConfigService {
   private options: {};
+  private config: Config;
 
   constructor(options = {}) {
     this.options = options;
+    this.config = new Config();
   }
 
-  async getWorkspaceConfig(options?: Options): Promise<WorkspaceConfig> {
+  async getWorkspaceConfig(
+    options: GetConfigOptions
+  ): Promise<WorkspaceConfig> {
     await this._pause(1000);
 
-    if (options) {
-      // TODO: resolve way of getting custom data
-      return { ...defaultInitWorkspaceConfig };
+    if (options && options.configName) {
+      const config = this.config.getStaticConfig(options.configName);
+      const workspaceConfig: WorkspaceConfig = {
+        initialNodes: config.initNodes,
+        initialEdges: config.initEdges,
+        nodeTypeComponentMap: config.nodeTypeComponentMap,
+        editPanelComponent: config.editPanelComponent,
+        nodeCreator: config.nodeCreator,
+        pipelinePreferences: config.pipelinePreferences,
+      };
+      console.log("config", config);
+      return { ...workspaceConfig } || { ...defaultInitWorkspaceConfig };
     }
 
     return { ...defaultInitWorkspaceConfig };

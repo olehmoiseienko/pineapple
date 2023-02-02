@@ -1,7 +1,10 @@
 import PaletteService from "./paletteService";
 import WorkspaceConfigService from "./workspaceConfigService";
-import type { PipelineConfig, InitializerOptions } from "./types";
-
+import type {
+  PipelineConfig,
+  InitializerOptions,
+  GetConfigOptions,
+} from "./types";
 
 class PipelineInitializer {
   private options: {};
@@ -14,9 +17,11 @@ class PipelineInitializer {
     this.workspaceService = new WorkspaceConfigService();
   }
 
-  async getPipelineConfig(): Promise<PipelineConfig> {
-    const paletteNodes = await this.paletteService.getPaletteData();
-    const workspaceConfig = await this.workspaceService.getWorkspaceConfig();
+  async getPipelineConfig(options: GetConfigOptions): Promise<PipelineConfig> {
+    const paletteNodes = await this.paletteService.getPaletteData(options);
+    const workspaceConfig = await this.workspaceService.getWorkspaceConfig(
+      options
+    );
 
     return {
       paletteNodes,
