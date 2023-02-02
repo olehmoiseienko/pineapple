@@ -1,4 +1,4 @@
-import {BaseNode} from "../../models/Node";
+import { BaseNode } from "../../models/Node";
 
 const defaultPort = {
   id: "1",
@@ -6,12 +6,7 @@ const defaultPort = {
   left: "50%",
 };
 
-export const nodeCreator = ({
-                              id,
-                              type,
-                              position,
-                            }: any):BaseNode => {
-
+export const nodeCreator = ({ id, type, position }: any): BaseNode => {
   const data = {
     label: `${type} ${id} node`,
     sources: [defaultPort],
@@ -19,4 +14,4 @@ export const nodeCreator = ({
   };
 
   return new BaseNode(id, type, position, data);
-}
+};

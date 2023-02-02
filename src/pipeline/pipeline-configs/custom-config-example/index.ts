@@ -9,7 +9,7 @@ import {
 } from "../default";
 
 // import define overrides here
-import {edges} from "./mocks/mocks";
+import { edges } from "./mocks/mocks";
 
 const initEdges = edges;
 
@@ -22,4 +22,4 @@ export {
   editPanelComponent,
   nodeCreator,
   pipelinePreferences,
-}
+};

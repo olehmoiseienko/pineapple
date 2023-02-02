@@ -5,8 +5,8 @@ import type { PaletteNode } from "../../models/Palette";
 import { BaseNode } from "../../models/Node";
 import type { BaseEdge } from "../../models/Edge";
 import type { NodeTypeComponentMap } from "../../models/NodeTypeComponentMap";
-import {nodeCreator as creator} from "./nodeCreator";
-import {pipelinePreferences as preferences} from "./pipelinePreferences";
+import { nodeCreator as creator } from "./nodeCreator";
+import { pipelinePreferences as preferences } from "./pipelinePreferences";
 
 export const initNodes: BaseNode[] = nodes;
 

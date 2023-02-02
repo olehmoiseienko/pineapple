@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactFlow, {
   addEdge,
   Background,
@@ -13,10 +13,13 @@ import ReactFlow, {
   useNodesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import {StyledWorkspace, StyledWorkspaceWrapper,} from "../styled/StyledWorkspace";
-import {draggableNodeKey} from "../constant";
-import type {WorkspaceConfig} from "../pipeline-initializer/types";
-import StyledButton, {ButtonType} from "../../shared/StyledButton";
+import {
+  StyledWorkspace,
+  StyledWorkspaceWrapper,
+} from "../styled/StyledWorkspace";
+import { draggableNodeKey } from "../constant";
+import type { WorkspaceConfig } from "../pipeline-initializer/types";
+import StyledButton, { ButtonType } from "../../shared/StyledButton";
 
 let id = 10;
 const getId = () => ` ${id++}`;
@@ -73,7 +76,7 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
         id: getId(),
         type,
         position,
-      })
+      });
 
       setNodes((nds) => nds.concat(newNode));
     },
@@ -129,10 +132,10 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
   const onDeployPipelineHandler = () => {
     const pipeline = {
       nodes,
-      edges
-    }
+      edges,
+    };
     onDeployPipeline(pipeline);
-  }
+  };
 
   return (
     <StyledWorkspace>
@@ -157,9 +160,13 @@ const Workspace = ({ workspaceConfig, onDeployPipeline }: Props) => {
             <Background />
             <Controls />
             <Panel position="top-left">
-              <StyledButton onClick={onDeployPipelineHandler} buttonType={ButtonType.DEFAULT}>Deploy</StyledButton>
+              <StyledButton
+                onClick={onDeployPipelineHandler}
+                buttonType={ButtonType.DEFAULT}
+              >
+                Deploy
+              </StyledButton>
             </Panel>
-
           </ReactFlow>
         </StyledWorkspaceWrapper>
 

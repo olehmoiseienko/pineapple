@@ -5,7 +5,6 @@ export enum ButtonType {
   ERROR = "error",
 }
 
-
 const StyledIconicButton = styled.button`
   display: inline;
   padding: 0 5px;
@@ -24,7 +23,7 @@ const StyledIconicButton = styled.button`
   &:hover {
     border-color: var(--main-text-color);
   }
-  
+
   &:disabled {
     opacity: 0.7;
   }

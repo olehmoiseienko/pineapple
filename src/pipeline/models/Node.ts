@@ -7,7 +7,12 @@ export class BaseNode implements IBaseNode {
   position: XYPosition;
   data: BaseNodeData;
 
-  constructor(id: string, type: string, position: XYPosition, data: BaseNodeData) {
+  constructor(
+    id: string,
+    type: string,
+    position: XYPosition,
+    data: BaseNodeData
+  ) {
     this.id = id;
     this.position = position;
     this.data = data;

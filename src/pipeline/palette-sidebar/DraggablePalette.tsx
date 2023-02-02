@@ -1,5 +1,5 @@
 import React from "react";
-import { PaletteNode } from "../models/Palette"
+import { PaletteNode } from "../models/Palette";
 import ExpandableGroup from "./ExpandableGroup";
 import { draggableNodeKey } from "../constant";
 
